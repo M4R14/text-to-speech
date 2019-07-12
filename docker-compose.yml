@@ -7,12 +7,3 @@ services:
     volumes:
       - ./app:/app
     command: gatsby develop --host 0.0.0.0
-  text-to-speech:
-    build: .
-    ports:
-      - 3000:3000
-    volumes:
-      - ./text-to-speech:/app
-    environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=My First Project-08241ca3f2bf.json
-    command: node server.js

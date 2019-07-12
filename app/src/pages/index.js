@@ -1,8 +1,11 @@
 import React from "react"
+import { Link } from "gatsby"
+import cookie from 'react-cookies'
 import Layout from "../components/layout"
 
 const IndexPage = () => (
   <Layout>
+    <Link to="/setup">setup</Link>
     <Caller />
   </Layout>
 )
@@ -13,10 +16,20 @@ class Caller extends React.Component {
     this.state = {
       inputText: '',
       number: [],
+      pitch: 0,
+      rate: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
+
+  componentWillMount() {
+    this.setState({
+      pitch: Number(cookie.load('pitch')) || 0,
+      rate: Number(cookie.load('rate')) || 0,
+    })
+  }
+
 
   handleChange(event) {
     const elem = event.target;
@@ -43,7 +56,7 @@ class Caller extends React.Component {
         number: nextNumber,
       }, () => {
         if (inputText > 0) {
-          let txtNum = 'เชิญหมายเลข, '
+          let txtNum = 'คิวที่, '
           for (let index = 0; index < nextNumber[0].toString().length; index++) {
             txtNum += nextNumber[0].toString()[index]+', '
           }
@@ -51,8 +64,8 @@ class Caller extends React.Component {
           const synth = window.speechSynthesis;
           const utterThis = new SpeechSynthesisUtterance(txtNum);
           utterThis.lang = 'th-TH';
-          utterThis.pitch = 1;
-          utterThis.rate = 0.8;
+          utterThis.pitch = this.state.pitch;
+          utterThis.rate = this.state.rate;
           synth.speak(utterThis);
         }
       });
