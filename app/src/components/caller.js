@@ -1,5 +1,6 @@
 import React from "react"
-import cookie from 'react-cookies'
+
+import AppConfig from './../app-config';
 
 class Caller extends React.Component {
     constructor(props) {
@@ -16,8 +17,8 @@ class Caller extends React.Component {
   
     componentWillMount() {
       this.setState({
-        pitch: Number(cookie.load('pitch')) || 0,
-        rate: Number(cookie.load('rate')) || 0,
+        pitch: AppConfig.getPitch(),
+        rate: AppConfig.getRate(),
       })
     }
 
@@ -54,17 +55,23 @@ class Caller extends React.Component {
           number: nextNumber,
         }, () => {
           if (inputText > 0) {
-            let txtNum = 'คิวที่, '
-            for (let index = 0; index < nextNumber[0].toString().length; index++) {
-              txtNum += nextNumber[0].toString()[index]+', '
-            }
-            txtNum += 'ค่ะ'
+            let txtNum = 'คิวที่, '+nextNumber;
+            // for (let index = 0; index < nextNumber[0].toString().length; index++) {
+            //   txtNum += nextNumber[0].toString()[index]+', '
+            // }
+            
             const synth = window.speechSynthesis;
             const utterThis = new SpeechSynthesisUtterance(txtNum);
             utterThis.lang = 'th-TH';
             utterThis.pitch = this.state.pitch;
             utterThis.rate = this.state.rate;
             synth.speak(utterThis);
+
+            const utterThis2 = new SpeechSynthesisUtterance('ค่ะ');
+            utterThis2.lang = 'th-TH';
+            utterThis2.pitch = this.state.pitch;
+            utterThis2.rate = this.state.rate - 0.2;
+            synth.speak(utterThis2);
           }
         });
       }

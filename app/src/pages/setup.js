@@ -1,8 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
-import cookie from 'react-cookies'
 
 import Layout from "../components/layout"
+import AppConfig from "../app-config"
 
 class SecondPage extends React.Component {
     constructor(props) {
@@ -18,8 +18,8 @@ class SecondPage extends React.Component {
 
     componentWillMount() {
         this.setState({
-            pitch: Number(cookie.load('pitch')) || 1,
-            rate: Number(cookie.load('rate')) || 1,
+            pitch: AppConfig.getPitch(),
+            rate: AppConfig.getRate(),
         })
     }
 
@@ -29,8 +29,8 @@ class SecondPage extends React.Component {
     }
 
     hanbleClickSave() {
-        cookie.save('pitch', this.state.pitch, { path: '/' })
-        cookie.save('rate', this.state.rate, { path: '/' })
+        AppConfig.setPith(this.state.pitch);
+        AppConfig.setRate(this.state.rate);
     }
     
     render() {
