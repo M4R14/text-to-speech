@@ -55,7 +55,7 @@ class Caller extends React.Component {
           number: nextNumber,
         }, () => {
           if (inputText > 0) {
-            let txtNum = 'คิวที่, '+nextNumber;
+            let txtNum = 'คิวที่, ' + nextNumber[0];
             // for (let index = 0; index < nextNumber[0].toString().length; index++) {
             //   txtNum += nextNumber[0].toString()[index]+', '
             // }
