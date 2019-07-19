@@ -1,6 +1,7 @@
 import React from "react"
 
 import AppConfig from './../app-config';
+import('./caller.scss');
 
 class Caller extends React.Component {
     constructor(props) {
@@ -79,41 +80,22 @@ class Caller extends React.Component {
   
     render() {
       return (
-        <div style={{ paddingTop: '5em', paddingBottom: '1em' }}>
-          <div style={{ textAlign: 'center', color: 'white' }} >
-            <h1 style={{ fontSize: '2em' }}>Queue Number</h1>
-            <h1 style={{ fontSize: '15rem', minHeight: '17rem' }}>
-                {this.state.number[0]}
-            </h1>
+        <div className="caller">
+          <div className="queue-number" >
+            <h1 className="title">Queue Number</h1>
+            <h1 className="number">{this.state.number[0]}</h1>
           </div>
-          <div 
-            style={{
-                color: 'white',
-                backgroundColor: '#ffffff5c',
-                padding: '20px 15px 5px',
-                margin: '0 20px',
-                borderRadius: '20px 20px',
-            }}
-          >
-            <h2 style={{ marginBottom: '7px', marginLeft: '22px', fontWeight: '500' }} >
-                Called Queue
-            </h2>
-            <div style={{ fontSize: '2.7rem', minHeight: '4rem', display: 'flex', flexWrap: 'wrap', fontFamily: 'system-ui', }} >
-                { this.state.number.map(n =>
-                    <div key={n} style={{ padding: '5px 20px', margin: '5px 0 20px 0px' }} >{n}</div>
+          <div className="called-queue" >
+            <h2 className="title" >Called Queue</h2>
+            <div className="called-box" >
+                { this.state.number.filter((n, index) => index > 0 ).map(n =>
+                    <div key={n} className="number" >{n}</div>
                 )}
             </div>
           </div>
-          <div style={{ textAlign: 'right', paddingTop: '2em', margin: '0 20px', }} >
+          <div className="input-number" >
             <input
                 id="inputText"
-                style={{
-                    width: '3em',
-                    borderRadius: '5px 5px',
-                    textAlign: 'center',
-                    fontSize: '2em',
-                    fontFamily: 'system-ui',
-                }}
                 onKeyPress={this.handleKeyPress}
                 onChange={this.handleChange}
                 value={this.state.inputText}
